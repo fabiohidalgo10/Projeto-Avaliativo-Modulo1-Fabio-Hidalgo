@@ -46,8 +46,7 @@ psql -h localhost -p 5432 -U postgres -d postgres -f 0_criar_banco.sql
 
 Para executar o **download automático exigido na atividade**, rode o comando
 abaixo. O ID de [viagens_2025_6meses.zip](https://drive.google.com/file/d/1pQjKacyHdIsyteknQbwKGM5_4hL5V4RV/view)
-já está configurado. Se o professor fornecer outro arquivo, use o campo
-`DRIVE_FILE_ID` no `.env` para substituir o ID. O ZIP baixado fica na pasta `data`.
+já está configurado.  use o campo `DRIVE_FILE_ID` no `.env` para substituir o ID. O ZIP baixado fica na pasta `data`.
 
 ```powershell
 .\.venv\Scripts\python.exe 1_extrair.py
@@ -73,7 +72,7 @@ Se já tiver baixado o ZIP, também é possível passá-lo com `--zip caminho\ar
 .\.venv\Scripts\python.exe 2_transformar.py
 ```
 
-O terminal mostra quantas linhas entraram em cada tabela e a diferença em relação à Raw. As viagens são carregadas antes das tabelas filhas. Registros órfãos e linhas sem campos obrigatórios ficam na Raw. O tratamento mantém a primeira ocorrência por `id_viagem` ou por `(id_viagem, sequencia_trecho)`. Pagamentos e passagens sem chave própria na fonte são deduplicados somente quando todos os campos originais coincidem. Se a fonte trouxer eventos genuinamente diferentes com todos os campos iguais, esse critério pode consolidá-los.
+O terminal mostra quantas linhas entraram em cada tabela e a diferença em relação à Raw. As viagens são carregadas antes das tabelas filhas. Registros órfãos e linhas sem campos obrigatórios ficam na Raw. O tratamento mantém a primeira ocorrência por `id_viagem` ou por `(id_viagem, sequencia_trecho)`. Pagamentos e passagens sem chave própria na fonte são de duplicados somente quando todos os campos originais coincidem. Se a fonte trouxer eventos genuinamente diferentes com todos os campos iguais, esse critério pode consolidá-los.
 
 Campos em branco passam a `NULL` na Silver. As funções de tratamento convertem valores brasileiros em decimais e datas em `DATE`. Falhas de conversão ou de constraints abortam a transação. As duas fases de carga podem ser repetidas. Cada fase troca seus dados em uma única transação.
 
@@ -103,7 +102,7 @@ Devem aparecer os quatro indicadores agregados. A view consulta a Silver atual, 
 
 ## 6. Publicar e entregar
 
-O pacote de entrega inclui `historico.bundle` e um guia de publicação. O bundle contém as branches e os commits por funcionalidade, prontos para serem recuperados com Git. Crie o repositório com o nome sugerido `Projeto-Avaliativo-Modulo1-<SEU_NOME>` e siga o guia para publicar e enviar o link pelo AVA.
+O pacote de entrega inclui `historico.bundle` e um guia de publicação. O bundle contém as branches e os commits por funcionalidade, prontos para serem recuperados com Git. Crie o repositório com o nome sugerido `Projeto-Avaliativo-Modulo1-Fabio-Hidalgo` e siga o guia para publicar e enviar o link pelo AVA.
 
 O `.env.example` fica no repositório. O `.env`, os CSVs e os ZIPs ficam na pasta local, cobertos pelo `.gitignore`.
 
